@@ -1,0 +1,15 @@
+{
+  "name": "middlewares",
+  "version": "1.0.0",
+  "description": "now we will learn about logger \r logger:logger is used to print the requests in console like wt type of requet,path, wt time etc",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "node": "^25.7.0"
+  }
+}
