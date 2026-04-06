@@ -1,7 +1,8 @@
 let express=require("express");
 let app=express();
-let port=5050;
-
+let port=process.env.PORT || 5050;
+let err=require("./expresserror");
+app.use(express.static("public"));
 //using next middle ware
 /*app.use((req,res,
    next)=>{
@@ -35,14 +36,14 @@ app.use("/api",(req,res,next)=>{
 
 });*/
 //USING OF MULTIPLE MIDDLEWARE
-/*
+
 let check= (req,res,next)=>{
    let{token}=req.query;
    if(token==="giveacess"){
       res.send("access provided");
    next();
    }
-   console.log("access dined");
+   throw new err(401,"ACCESS DENIED");
    
 
 };
@@ -50,6 +51,7 @@ app.use("/api",check,(req,res)=>{
    res.send("it passed though check token");
 });
 //404 page
+/*
 app.use((req,res)=>{
    res.send("page not found");
 });
@@ -62,10 +64,13 @@ app.get("/err", (req, res, next) => {
         next(err);     // pass error to error handler
     }
 });
+app.get("/admin",(req,res)=>{
+   throw new err(403,"Access to admin is Forbidden ");
+});
 
 app.use((err, req, res, next) => {
-    console.log("Error:", err.message);
-    res.status(500).send("Something went wrong!",{w});
+    let {status=500,message="some error occured"}=err;
+    res.status(status).send(message);
 });
 
 app.listen(port, () => {
